@@ -1,0 +1,77 @@
+# ── Environment & secrets (never commit) ──────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Dependencies ────────────────────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# ── Build outputs ───────────────────────────────────────────────────────────
+backend/dist/
+frontend/dist/
+*.tsbuildinfo
+
+# ── Logs & runtime ──────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Uploads & temp files (local dev artifacts) ──────────────────────────────
+backend/uploads/
+backend/temp_audio/
+
+# ── AI service local state ───────────────────────────────────────────────────
+ai_service/ai_sessions.db
+ai_service/*.db
+ai_service/.pytest_cache/
+
+# ── IDE & OS ────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Test & coverage ─────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ── Misc ────────────────────────────────────────────────────────────────────
+.claude/
+*.local.json
+
+# ── Local samples / client data (do not publish) ────────────────────────────
+Niazi_Foods_Knowledge_Base.pdf
+Outbound_Contacts.csv
+Requirements.docx
+SDS_Testing_Evaluation.md
+*.mp4
+V1.mp4
+V2.mp4
+
+# Git history helper (local only)
+_build_git_history.ps1
+_pr_commands.txt
