@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ELVA — Project Overview</title>
+  <style>
+    :root {
+      --navy: #0f2744;
+      --blue: #1e6fd9;
+      --powder: #f0f6fc;
+      --border: #d8e3ef;
+      --text: #1e293b;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--powder);
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, var(--navy), #163a5f);
+      color: #fff;
+      padding: 2.75rem 2rem 2.25rem;
+    }
+    header h1 { margin: 0 0 .6rem; font-size: 2.1rem; letter-spacing: -0.02em; }
+    header .subtitle { margin: 0; font-size: 1.05rem; opacity: .9; max-width: 640px; }
+    header .tagline {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .35rem .85rem;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: .8rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+    }
+    nav a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+    section {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(15, 39, 68, .04);
+    }
+    h2 {
+      margin: 0 0 1rem;
+      color: var(--navy);
+      font-size: 1.3rem;
+      padding-bottom: .6rem;
+      border-bottom: 2px solid var(--powder);
+    }
+    h3 {
+      color: var(--navy);
+      font-size: 1rem;
+      margin: 1.75rem 0 .75rem;
+    }
+    h3:first-of-type { margin-top: 0; }
+    p { margin: 0 0 1rem; }
+    p:last-child { margin-bottom: 0; }
+    .lead { font-size: 1.05rem; color: var(--muted); }
+    .purpose {
+      background: linear-gradient(90deg, #eff6ff, #f8fafc);
+      border-left: 4px solid var(--blue);
+      padding: 1.1rem 1.35rem;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 1.25rem;
+    }
+    .purpose strong { color: var(--navy); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+      margin: .5rem 0 0;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: .65rem .85rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--powder);
+      font-weight: 600;
+      color: var(--navy);
+      width: 28%;
+    }
+    tr:nth-child(even) td { background: #fafcff; }
+    ul { margin: .5rem 0 0; padding-left: 1.3rem; }
+    li { margin-bottom: .4rem; }
+    li:last-child { margin-bottom: 0; }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: .84em;
+      background: #f1f5f9;
+      padding: .12rem .4rem;
+      border-radius: 4px;
+      color: #0f2744;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1.15rem 1.25rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: .82rem;
+      line-height: 1.55;
+      margin: 1rem 0 0;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      section { padding: 1.25rem 1.25rem; }
+    }
+    .feature-card {
+      background: var(--powder);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--border);
+    }
+    .feature-card h4 {
+      margin: 0 0 .4rem;
+      font-size: .95rem;
+      color: var(--navy);
+    }
+    .feature-card p {
+      margin: 0;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ELVA</h1>
+    <p class="subtitle">Easy Live Virtual Agent — a multi-tenant AI SaaS platform for chat and voice agents.</p>
+    <span class="tagline">Project reference document</span>
+  </header>
+
+  <nav>
+    <a href="#purpose">Purpose</a>
+    <a href="#about">About</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#stack">Tech stack</a>
+    <a href="#features">Features</a>
+    <a href="#structure">Repo structure</a>
+    <a href="#run">Running locally</a>
+  </nav>
+
+  <main>
+    <section id="purpose">
+      <h2>What this document is</h2>
+      <div class="purpose">
+        <strong>Purpose:</strong> This HTML file is a readable overview of the ELVA project — what it does, how it is built, and which technologies it uses. Open it in any browser for a quick reference when onboarding or reviewing the codebase.
+      </div>
+      <p class="lead">
+        It is not a task list or implementation plan. For setup commands and environment variables, see <code>README.md</code> in the project root.
+      </p>
+    </section>
+
+    <section id="about">
+      <h2>About ELVA</h2>
+      <p>
+        ELVA enables businesses to create, configure, and deploy their own <strong>AI chat and voice agents</strong> through a guided dashboard. Each customer workspace (tenant) gets isolated data, subscription plans, knowledge bases, analytics, and integrations.
+      </p>
+      <p>
+        The platform supports inbound phone calls, browser voice testing, website chat embeds, outbound campaigns, CRM-style orders and leads, connector automations (email, Slack, WhatsApp), and platform-level administration.
+      </p>
+    </section>
+
+    <section id="architecture">
+      <h2>System architecture</h2>
+      <p>ELVA is a three-tier application: a React frontend, a Node/Express API, and a Python AI service.</p>
+      <pre>
+┌─────────────────────────────────────────────────────────────┐
+│  Frontend (React + Vite)          http://localhost:5173     │
+│  Dashboard · agent builder · analytics · billing            │
+└───────────────────────────┬─────────────────────────────────┘
+                            │  REST API + HttpOnly auth cookie
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Backend (Express + TypeScript)   http://localhost:3000     │
+│  Auth · tenants · voice webhooks · Stripe · connectors      │
+└───────────────────────────┬─────────────────────────────────┘
+                            │  Shared secrets (AI ↔ backend)
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  AI Service (FastAPI + Python)    http://localhost:8000     │
+│  RAG · chat · voice streaming · agent config generation     │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        ▼                   ▼                   ▼
+   MongoDB            Supabase            External APIs
+   (business data)    (vectors + files)   Groq · Gemini · Twilio
+                                         Deepgram · Azure · Stripe
+      </pre>
+      <p><strong>Voice pipeline:</strong> Caller → Twilio → WebSocket → Deepgram (speech-to-text) + Azure (text-to-speech) + AI <code>/chat/stream</code></p>
+    </section>
+
+    <section id="stack">
+      <h2>Technology stack</h2>
+
+      <h3>Application layers</h3>
+      <table>
+        <thead><tr><th>Layer</th><th>Technologies</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Frontend</td><td>React 18, TypeScript, Vite 5, Tailwind CSS</td><td>SPA dashboard and public marketing pages</td></tr>
+          <tr><td>Routing &amp; state</td><td>React Router v6, React Context</td><td>Auth guards, subscription gating, multi-account UI</td></tr>
+          <tr><td>Backend</td><td>Node.js 20, Express 4, TypeScript, Mongoose 9</td><td>REST API, webhooks, WebSocket media streams</td></tr>
+          <tr><td>AI service</td><td>Python 3.11, FastAPI, Uvicorn, LangChain</td><td>RAG, LLM chat, document ingestion, voice AI</td></tr>
+          <tr><td>Primary database</td><td>MongoDB</td><td>Tenants, users, agents, orders, campaigns, voice sessions</td></tr>
+          <tr><td>Vector storage</td><td>Supabase (pgvector + storage)</td><td>PDF chunks and embeddings for knowledge-base RAG</td></tr>
+          <tr><td>AI session store</td><td>SQLite (<code>ai_sessions.db</code>)</td><td>In-conversation order/lead state in the AI service</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Authentication &amp; security</h3>
+      <table>
+        <thead><tr><th>Technology</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>JWT + HttpOnly cookie</td><td>Session auth with <code>userId</code>, <code>tenantId</code>, <code>role</code></td></tr>
+          <tr><td>bcryptjs</td><td>Password and embed-secret hashing</td></tr>
+          <tr><td>Google OAuth</td><td>Sign in with Google</td></tr>
+          <tr><td>Helmet, express-rate-limit</td><td>Security headers and request throttling</td></tr>
+          <tr><td>Shared secrets</td><td><code>AI_SERVICE_SECRET</code>, <code>INTERNAL_API_SECRET</code> between services</td></tr>
+          <tr><td>Webhook signatures</td><td>Twilio, Stripe, and Slack request verification</td></tr>
+        </tbody>
+      </table>
+
+      <h3>AI, voice &amp; integrations</h3>
+      <table>
+        <thead><tr><th>Technology</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>Groq + Google Gemini</td><td>LLM inference and text embeddings</td></tr>
+          <tr><td>LangChain, pypdf</td><td>Document loading and RAG pipeline</td></tr>
+          <tr><td>Twilio + Deepgram + Azure Speech</td><td>Phone calls, real-time STT, TTS for voice agents</td></tr>
+          <tr><td>Stripe</td><td>Subscription billing and checkout</td></tr>
+          <tr><td>SendGrid</td><td>Email verification and password reset</td></tr>
+          <tr><td>Slack, WhatsApp (Meta API)</td><td>Connector dispatch and notifications</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Frontend UI libraries</h3>
+      <table>
+        <thead><tr><th>Technology</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>shadcn / Base UI, Lucide icons</td><td>Component primitives and iconography</td></tr>
+          <tr><td>Framer Motion</td><td>Page and layout animations</td></tr>
+          <tr><td>@dnd-kit</td><td>Drag-and-drop in the agent builder</td></tr>
+          <tr><td>react-markdown, jsPDF, html2canvas</td><td>In-app docs and PDF export</td></tr>
+          <tr><td>@twilio/voice-sdk</td><td>Browser-based voice agent testing</td></tr>
+        </tbody>
+      </table>
+
+      <h3>DevOps &amp; tooling</h3>
+      <table>
+        <thead><tr><th>Technology</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td>GitHub Actions</td><td>CI — backend tests, frontend build/lint, AI service check</td></tr>
+          <tr><td>Docker Compose</td><td>Optional containerized local or deployment setup</td></tr>
+          <tr><td>ESLint, TypeScript</td><td>Frontend linting and type checking</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="features">
+      <h2>Platform capabilities</h2>
+      <div class="grid-2">
+        <div class="feature-card">
+          <h4>Multi-tenant workspaces</h4>
+          <p>Isolated tenants with roles (business admin, member, platform admin), invites, and audit logs.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Agent builder</h4>
+          <p>Create chat and voice agents with personas, knowledge bases, catalogs, and connector rules.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Voice agents</h4>
+          <p>Inbound phone, browser test calls, outbound campaigns, call history, and analytics.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Knowledge &amp; RAG</h4>
+          <p>Upload PDFs; chunks stored in Supabase; retrieved at chat and voice runtime.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Commerce &amp; CRM</h4>
+          <p>In-chat orders and leads, catalog management, and workspace reporting.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Subscriptions</h4>
+          <p>Free, Starter, Pro, and Enterprise plans with usage limits enforced per tenant.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Website chat embed</h4>
+          <p>Public chat widget and API for customer websites with origin controls.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Connectors</h4>
+          <p>Automate actions via email templates, Slack, WhatsApp, and scheduled digests.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="structure">
+      <h2>Repository structure</h2>
+      <table>
+        <thead><tr><th>Path</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>frontend/</code></td><td>React dashboard and public pages (Vite)</td></tr>
+          <tr><td><code>backend/</code></td><td>Express API, voice pipeline, webhooks, MongoDB models</td></tr>
+          <tr><td><code>ai_service/</code></td><td>FastAPI service for RAG, chat, and AI generation</td></tr>
+          <tr><td><code>docker-compose.yml</code></td><td>Optional Docker setup for all services + MongoDB</td></tr>
+          <tr><td><code>README.md</code></td><td>Setup instructions and environment configuration</td></tr>
+          <tr><td><code>.gitignore</code></td><td>Excludes <code>.env</code>, <code>node_modules</code>, uploads, and build artifacts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="run">
+      <h2>Running locally</h2>
+      <p>Three terminals are required — one per service:</p>
+      <table>
+        <thead><tr><th>Service</th><th>Command</th><th>Port</th></tr></thead>
+        <tbody>
+          <tr><td>AI service</td><td><code>cd ai_service && py -m uvicorn main:app --reload</code></td><td>8000</td></tr>
+          <tr><td>Backend</td><td><code>cd backend && npm run dev</code></td><td>3000</td></tr>
+          <tr><td>Frontend</td><td><code>cd frontend && npm run dev</code></td><td>5173</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:1rem;">
+        Copy each <code>.env.example</code> to <code>.env</code> and fill in API keys before starting.
+        The frontend dev server proxies <code>/api</code> requests to the backend automatically.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    ELVA — Easy Live Virtual Agent · Project overview document
+  </footer>
+</body>
+</html>
