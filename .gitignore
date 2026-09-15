@@ -72,7 +72,6 @@ SDS_Testing_Evaluation.md
 V1.mp4
 V2.mp4
 
-# Git history helper (local only)
-_build_git_history.ps1
-_finish_git_history.ps1
-_pr_commands.txt
+# Accidental Node leftover in the Python service
+ai_service/package.json
+ai_service/package-lock.json
