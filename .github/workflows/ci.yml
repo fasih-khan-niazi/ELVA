@@ -58,7 +58,7 @@ jobs:
       INTERNAL_API_SECRET: ci-internal-secret-must-match-ai
       AI_SERVICE_SECRET: ci-ai-service-secret
       SUPABASE_URL: https://example.supabase.co
-      SUPABASE_KEY: ci-placeholder-key
+      SUPABASE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIn0.e30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
