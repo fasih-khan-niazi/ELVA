@@ -1,6 +1,6 @@
 # ELVA
 
-**Easy Live Virtual Agent** — a multi-tenant SaaS platform for businesses to create, deploy, and operate AI **chat** and **voice** agents in a few steps.
+**Easy Live Virtual Agent** is a multi-tenant SaaS platform for businesses to create, deploy, and operate AI **chat** and **voice** agents in a few steps.
 
 Teams register a workspace, configure an agent (persona, knowledge base, catalog), then go live on their website, over the phone, or through tools they already use (Slack, email, webhooks, WhatsApp).
 
@@ -8,14 +8,14 @@ Teams register a workspace, configure an agent (persona, knowledge base, catalog
 
 ## What you can do
 
-- **Chat agents** — in-dashboard testing plus a public website embed widget
-- **Voice agents** — inbound and outbound phone calls (Twilio), browser voice testing, real-time STT/TTS
-- **Knowledge** — PDF and text ingestion with RAG so answers stay grounded in your documents
-- **Catalog, orders, and leads** — agents can take orders and capture leads during a conversation
-- **Connectors** — notify Slack, email, WhatsApp, or a webhook when an order, lead, or call event fires
-- **Campaigns** — outbound dialer with contact lists, DNC, calling hours, and post-call analysis
-- **Workspaces** — invites, roles, audit log, and plan-based limits
-- **Billing** — Stripe subscriptions (Free, Starter, Pro, Enterprise)
+- **Chat agents:** in-dashboard testing plus a public website embed widget
+- **Voice agents:** inbound and outbound phone calls (Twilio), browser voice testing, real-time STT/TTS
+- **Knowledge:** PDF and text ingestion with RAG so answers stay grounded in your documents
+- **Catalog, orders, and leads:** agents can take orders and capture leads during a conversation
+- **Connectors:** notify Slack, email, WhatsApp, or a webhook when an order, lead, or call event fires
+- **Campaigns:** outbound dialer with contact lists, DNC, calling hours, and post-call analysis
+- **Workspaces:** invites, roles, audit log, and plan-based limits
+- **Billing:** Stripe subscriptions (Free, Starter, Pro, Enterprise)
 
 ---
 
@@ -94,17 +94,17 @@ Fill in secrets. These pairs **must match**:
 ### 2. Run locally (three terminals)
 
 ```bash
-# Terminal 1 — AI service
+# Terminal 1 - AI service
 cd ai_service
 pip install -r requirements.txt
 python -m uvicorn main:app --reload --port 8000
 
-# Terminal 2 — Backend
+# Terminal 2 - Backend
 cd backend
 npm install
 npm run dev
 
-# Terminal 3 — Frontend (Vite proxies /api → backend)
+# Terminal 3 - Frontend (Vite proxies /api to backend)
 cd frontend
 npm install
 npm run dev
@@ -154,9 +154,9 @@ ELVA/
 3. Create a **chat** or **voice** agent (AI quick setup, template, or manual)
 4. Upload knowledge-base PDFs and optional product catalog
 5. Go live:
-   - **Website** — publish an embed key and paste the widget snippet
-   - **Phone** — assign a Twilio number
-   - **Connectors** — Slack / email / webhook / WhatsApp on order, lead, or call events
+   - **Website:** publish an embed key and paste the widget snippet
+   - **Phone:** assign a Twilio number
+   - **Connectors:** Slack / email / webhook / WhatsApp on order, lead, or call events
 6. Operate from the dashboard: chats, orders, leads, analytics, campaigns
 
 ---
@@ -183,7 +183,7 @@ GitHub Actions runs backend tests, frontend lint/build, and an AI service import
 
 ## Security notes
 
-- Never commit `.env` files — they are gitignored. Use the `.env.example` templates.
+- Never commit `.env` files. They are gitignored. Use the `.env.example` templates.
 - Shared secrets between backend and AI service are required in production.
 - `ELVA_DEV_INSECURE=1` is for local development only.
 - Twilio and Slack webhooks are signature-verified.
@@ -192,7 +192,7 @@ GitHub Actions runs backend tests, frontend lint/build, and an AI service import
 
 ## Docs in this repo
 
-- `FRONTEND_SPEC.md` — frontend structure and UI conventions
-- `supabase_schema.sql` — vector table and `match_documents` RPC
-- `voice-analytics-guide.html` — voice analytics notes
-- `ELVA_PROJECT_AUDIT.html` — technology inventory and audit notes
+- `FRONTEND_SPEC.md`: frontend structure and UI conventions
+- `supabase_schema.sql`: vector table and `match_documents` RPC
+- `voice-analytics-guide.html`: voice analytics notes
+- `ELVA_PROJECT_AUDIT.html`: technology inventory and audit notes

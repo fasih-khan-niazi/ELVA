@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      MONGO_URI: mongodb://127.0.0.1:27017/elva_ci
+      JWT_SECRET: ci-test-jwt-secret-at-least-16
+      INTERNAL_API_SECRET: ci-internal-secret-must-match-ai
+      AI_SERVICE_SECRET: ci-ai-service-secret
+      NODE_ENV: test
+      ELVA_SKIP_LISTEN: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  ai_service:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ai_service
+    env:
+      INTERNAL_API_SECRET: ci-internal-secret-must-match-ai
+      AI_SERVICE_SECRET: ci-ai-service-secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: ai_service/requirements.txt
+      - run: pip install -r requirements.txt
+      - run: python -c "import main; print('ai_service import ok')"

@@ -527,7 +527,8 @@ async def ingest_document(
     agent_id: Optional[str] = Form(None),
     document_id: Optional[str] = Form(None),
 ):
-    temp_file_path = f"temp_{re.sub(r'[^\\w.\\-]', '_', os.path.basename(file.filename or 'upload'))}"
+    safe_name = re.sub(r"[^\w.\-]", "_", os.path.basename(file.filename or "upload"))
+    temp_file_path = f"temp_{safe_name}"
 
     try:
         print(f"Ingesting document: {file.filename} for tenant: {tenant_id}, agent: {agent_id}, document_id: {document_id}")

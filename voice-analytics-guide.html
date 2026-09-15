@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ELVA — Voice Analytics: what each metric is</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.55;
+      color: #1e293b;
+      background: #f0f9ff;
+    }
+    body { max-width: 52rem; margin: 2rem auto; padding: 0 1.25rem 3rem; }
+    h1 { font-size: 1.65rem; color: #0f172a; margin-bottom: 0.35rem; }
+    .muted { color: #64748b; font-size: 0.95rem; margin-bottom: 1.75rem; }
+    h2 { font-size: 1.1rem; color: #0c4a6e; margin: 2rem 0 0.65rem; border-bottom: 1px solid #bae6fd; padding-bottom: 0.25rem; }
+    h3 { font-size: 1rem; color: #0f172a; margin: 1.15rem 0 0.4rem; }
+    p { margin: 0.5rem 0; }
+    ul { margin: 0.4rem 0 0.6rem 1.1rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 0.75rem 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgb(14 165 233 / 0.12); }
+    th, td { text-align: left; padding: 0.6rem 0.65rem; border-bottom: 1px solid #e0f2fe; vertical-align: top; }
+    th { background: #e0f2fe; color: #0c4a6e; font-weight: 600; }
+    tr:last-child td { border-bottom: none; }
+    .degrade { color: #b45309; }
+    .better { color: #047857; }
+    code { font-size: 0.86em; background: #e0f2fe; padding: 0.1em 0.35em; border-radius: 4px; }
+    footer { margin-top: 2.5rem; font-size: 0.85rem; color: #64748b; }
+  </style>
+</head>
+<body>
+  <h1>Voice Analytics — what each part means</h1>
+  <p class="muted">Reference for the ELVA dashboard at <strong>Voice Analytics</strong>. Numbers come from your tenant’s stored <code>VoiceSession</code> and <code>VoiceTurn</code> data (and related endpoints), unless noted.</p>
+
+  <h2>Time window (dropdown)</h2>
+  <p>Chooses how far back to look for <strong>turn-level</strong> metrics and the volume chart. Presets range from 1 hour through <strong>Lifetime</strong> (all stored history for your tenant).</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li><strong>Too narrow:</strong> Old calls fall outside the window — KPIs show dashes or zeros while “Total sessions” (below) can still look high.</li>
+    <li><strong>Very wide / Lifetime:</strong> Chart buckets get coarser (e.g. weekly for lifetime) so fine-grained spikes are smoothed; first load can be slower with huge history.</li>
+  </ul>
+  <h3>How to make it better</h3>
+  <ul class="better">
+    <li>Pick the <strong>smallest window that includes the calls you care about</strong> for latency/SLO; use <strong>Lifetime</strong> when you want all-time rollups.</li>
+    <li>Ensure voice traffic actually creates <strong>turns</strong> (speech → AI → reply) so the window has data to aggregate.</li>
+  </ul>
+
+  <h2>Top KPI row</h2>
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>What it is</th><th>Degrades when…</th><th>Improvements</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Active calls</strong></td>
+        <td>Calls with session status <em>in progress</em> right now.</td>
+        <td class="degrade">Always zero if no live call; not “calls today.”</td>
+        <td class="better">Treat as <em>live concurrency</em>. For “calls today” use session lists or future daily counters.</td>
+      </tr>
+      <tr>
+        <td><strong>Total turns</strong></td>
+        <td>Count of <strong>VoiceTurn</strong> rows in the selected window (speech/response exchanges).</td>
+        <td class="degrade">Zero if no turns in window, or turns never persisted.</td>
+        <td class="better">Confirm webhooks hit the orchestrator path that writes <code>VoiceTurn</code>; widen the window or use Lifetime.</td>
+      </tr>
+      <tr>
+        <td><strong>Phone / web</strong></td>
+        <td>Split of those turns by the session’s channel.</td>
+        <td class="degrade">Skewed if channel not set correctly on session.</td>
+        <td class="better">Ensure <code>VoiceSession.channel</code> is set when creating the session.</td>
+      </tr>
+      <tr>
+        <td><strong>SLO compliance</strong></td>
+        <td>Share of turns with <code>sloOk</code> true (latency within the configured turn SLO).</td>
+        <td class="degrade">Shown as “—” when there are no turns; misleading if sample is tiny.</td>
+        <td class="better">More traffic; tune SLO targets to match product/infra reality.</td>
+      </tr>
+      <tr>
+        <td><strong>Error rate</strong></td>
+        <td>Share of turns that stored a non-empty <code>error</code> field.</td>
+        <td class="degrade">“—” with no turns; may miss errors only logged elsewhere.</td>
+        <td class="better">Ensure error paths call <code>persistErrorTurn</code> so failures become rows.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Latency row (P50 / P90 / P99 / Avg / Min / Max)</h2>
+  <p>Statistics over <strong>latencyMs</strong> on turns in the window. Compared to the <strong>SLO target</strong> card (product ceiling from config, not a live measurement).</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li>No turns → dashes; percentiles need enough samples to be stable.</li>
+    <li>Outliers and cold starts move <strong>Max</strong> and <strong>P99</strong> more than <strong>P50</strong>.</li>
+  </ul>
+  <h3>How to make it better</h3>
+  <ul class="better">
+    <li>Optimize AI/STT/TTS timeouts and regional deployment; track regressions by release.</li>
+  </ul>
+
+  <h2>Turn volume &amp; latency (chart)</h2>
+  <p>Time buckets with turn counts, average latency in the bucket, errors, and call start/end events where applicable. Bucket size depends on window length (finer for short windows, coarser for long ones).</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li>Empty if no activity in range; sparse traffic shows as isolated bars.</li>
+    <li>Long windows compress detail into coarse buckets.</li>
+  </ul>
+
+  <h2>Historical stats row (Total sessions, Completed, Failed, Endpoints)</h2>
+  <p>Mostly <strong>all-time-ish</strong> tenant totals from sessions and endpoints — not constrained by the dropdown the same way the turn metrics are.</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li>Can look “healthy” while the windowed KPIs are empty — different time semantics.</li>
+  </ul>
+  <h3>How to make it better</h3>
+  <ul class="better">
+    <li>Align expectations: use the subtitle/range copy on the page for rolling windows vs lifetime.</li>
+  </ul>
+
+  <h2>Call end reasons</h2>
+  <p>Breakdown by <code>endReason</code> on sessions where it exists (goodbye, hangup, timeouts, etc.).</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li>Hidden or sparse if lifecycle hooks don’t set <code>endReason</code> reliably.</li>
+  </ul>
+
+  <h2>Alerts</h2>
+  <p>Rule-based notices from the same snapshot as metrics (SLO, error rate, latency) plus <strong>AI service</strong> health from the orchestrator probe.</p>
+  <h3>How it degrades</h3>
+  <ul class="degrade">
+    <li>Few turns → fewer statistically meaningful alerts; health probe can lag real outages.</li>
+  </ul>
+
+  <footer>
+    Served as static file: <code>/voice-analytics-guide.html</code> (dev: Vite public folder). Built for ELVA; adjust if your API or schema diverges.
+  </footer>
+</body>
+</html>
