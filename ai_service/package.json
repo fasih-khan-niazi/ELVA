@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev": "py -m uvicorn main:app --reload"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.554.0",
+    "react-router-dom": "^7.9.6",
+    "tailwind-merge": "^3.4.0"
+  }
+}

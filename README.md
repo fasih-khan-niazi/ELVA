@@ -112,12 +112,6 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
-On Windows you can start all three with:
-
-```powershell
-.\scripts\start-elva.ps1
-```
-
 Voice testing over the public internet needs a tunnel (`ngrok http 3000`) and `BASE_URL` set in `backend/.env`.
 
 ### Docker (optional)
@@ -139,7 +133,6 @@ ELVA/
 │   └── public/embed/      Website chat widget (elva-chat.js)
 ├── ai_service/            FastAPI RAG + LLM
 ├── .github/workflows/     CI
-├── scripts/               Local dev helpers
 ├── docker-compose.yml
 ├── supabase_schema.sql    pgvector schema for RAG
 └── README.md
